@@ -71,7 +71,10 @@ app.controller('tasksController', function($scope, $http) {
         });
     };
 
+    $scope.activeTaskFilter = function(item) {
+        return item.status === '1';
+    };
+
     // Load all tasks on init.
     getTasks();
-
 });

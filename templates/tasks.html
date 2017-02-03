@@ -23,7 +23,7 @@
                     </li>
                 </ul>
                 <div class="todo-footer">
-                    <span><strong><span >{{filteredTasks.length}}</span></strong> Items</span>
+                    <span><strong><span >{{(tasks | filter:activeTaskFilter).length}}</span></strong> Items</span>
                     <div class="pull-right">
                         <label class="task-filter-label">
                             <input type="checkbox" data-ng-model="search.status" ng-true-value="" ng-false-value="" class="task-filter">
