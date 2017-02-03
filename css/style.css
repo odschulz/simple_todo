@@ -1,0 +1,73 @@
+body{
+    background-color:#EEEEEE;
+}
+
+.todolist{
+    background-color:#FFF;
+    padding:20px 20px 10px 20px;
+    margin-top:30px;
+}
+
+.todolist h1{
+    margin:0;
+    padding-bottom:20px;
+    text-align:center;
+}
+
+.form-control{
+    border-radius:0;
+}
+
+li.task {
+    background:#fff;
+    border:none;
+    border-bottom:1px solid #ddd;
+    padding: 10px 20px 10px 20px;
+}
+
+li.task .checkbox{
+    display: inline;
+}
+
+li.task:last-child{
+    border-bottom:none;
+}
+
+li.task {
+    background:#fff;
+    border:none;
+    border-bottom:1px solid #ddd;
+    cursor:move;
+}
+
+.todo-footer{
+    background-color:#F4FCE8;
+    overflow: hidden;
+    /*margin:0 -20px -10px -20px;*/
+    padding: 5px 10px;
+}
+
+.done-item {
+    text-decoration:line-through;
+    color: #A9A9A9;
+}
+
+#done-items li:last-child{
+    border-bottom:none;
+}
+
+#checkAll{
+    margin-top:10px;
+}
+
+.task-filter-label {
+    cursor: pointer;
+}
+
+.task-filter-label :checked + span {
+    border: 2px solid grey;
+    padding: 5px 10px;
+}
+.task-filter-label input[type=checkbox] {
+    opacity: 0;
+}

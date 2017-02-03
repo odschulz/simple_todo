@@ -1,0 +1,12 @@
+{
+    "autoload": {
+     "psr-4": {
+       "Controllers\\": "../src/controllers",
+       "Models\\": "../src/models",
+       "Middleware\\": "../src/middleware"
+      }
+    },
+    "require": {
+        "slim/slim": "^3.0"
+    }
+}

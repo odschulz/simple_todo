@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="todolist not-done">
+                <h1>Todo</h1>
+                <input type="text" class="form-control add-todo" placeholder="What needs to be done?" code="13" td-key-code="addTask($input);">
+                <hr>
+                <ul class="list-unstyled" dnd-list="tasks">
+                    <li ng-repeat="task in tasks | filterByStatus:search as filteredTasks"
+                        class="task"
+                        dnd-list-id="{{task.id}}"
+                        dnd-draggable="task"
+                        dnd-moved="reorderTasks($index)"
+                        dnd-effect-allowed="move"
+                        dnd-selected="models.selected = task"
+                        ng-class="{'selected': models.selected === task}"
+                    >
+                        <div class="checkbox">
+                            <input ng-click="closeTask(task)" ng-checked="task.status === '0'" ng-disabled="task.status === '0'" type="checkbox" value="" />
+                            <span ng-class="{'done-item': task.status === '0'}">{{task.title}}</span>
+                        </div>
+                        <button class="remove-item btn btn-default btn-xs pull-right" ng-click="deleteTask(task)"><span class="glyphicon glyphicon-remove"></span></button>
+                    </li>
+                </ul>
+                <div class="todo-footer">
+                    <span><strong><span >{{filteredTasks.length}}</span></strong> Items</span>
+                    <div class="pull-right">
+                        <label class="task-filter-label">
+                            <input type="checkbox" data-ng-model="search.status" ng-true-value="" ng-false-value="" class="task-filter">
+                            <span>All</span>
+                        </label>
+                        <label class="task-filter-label">
+                            <input type="checkbox" data-ng-model="search.status" ng-true-value="1" ng-false-value="" class="task-filter">
+                            <span>Active</span>
+                        </label>
+                        <label class="task-filter-label">
+                            <input type="checkbox" data-ng-model="search.status" ng-true-value="0" ng-false-value="" class="task-filter">
+                            <span>Completed</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

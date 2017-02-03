@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="toDoApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ToDo</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+    <!--Main view-->
+    <div ng-view></div>
+
+    <!--Libs-->
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-drag-and-drop-lists.min.js"></script>
+    <script src="js/angular-route.js"></script>
+
+    <!--Application-->
+    <script src="app/app.js"></script>
+
+    <!--Controllers-->
+    <script src="app/controllers/tasksController.js"></script>
+
+    <!--Directives-->
+    <script src="app/directives/tdKeyCode.js"></script>
+
+    <!--Filters-->
+    <script src="app/filters/filterByStatus.js"></script>
+
+</body>
+
+</html>
