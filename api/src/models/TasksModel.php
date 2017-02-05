@@ -53,20 +53,31 @@ class TasksModel extends BaseModel {
      * Close task by id.
      *
      * @param int $id
+     * @param array $params
      * @param bool $fetch_tasks
      *
      * @return array
+     *
+     * @throws \Exception
      */
-    public function closeTaskById($id, $fetch_tasks = TRUE) {
-        if (!intval($id)) {
-            throw new \Exception('Invalid ID provided for closing task.');
+    public function updateTaskById($id, array $params, $fetch_tasks = TRUE) {
+        if (
+            !intval($id) ||
+            !isset($params['title']) ||
+            !isset($params['status']) ||
+            !isset($params['position'])
+        ) {
+            throw new \Exception('Invalid data provided for updating task.');
         }
 
-        $this->db->prepare('UPDATE task set status = :status WHERE id = :id', [
-                ':status' => 0,
+        $this->db
+            ->prepare('UPDATE task SET title = :title, status = :status, position = :position WHERE id = :id', [
+                'title' => $params['title'],
+                'status' => $params['status'],
+                ':position' => $params['position'],
                 ':id' => $id
             ])->execute();
-        
+
         if ($fetch_tasks) {
             return $this->index();
         }
@@ -81,6 +92,8 @@ class TasksModel extends BaseModel {
      * @param bool $fetch_tasks
      *
      * @return array
+     *
+     * @throws \Exception
      */
     public function deleteTaskById($id, $fetch_tasks = TRUE) {
         // TODO: Alternatively, do not delete but rather set to 'inactive'.
@@ -102,17 +115,25 @@ class TasksModel extends BaseModel {
     /**
      * Get task by id.
      *
-     * @param array $tasks
+     * @param array $params
      *   Task ID as key, weight as value.
      * @param bool $fetch_tasks
      *
      * @return array
      *   All tasks after position has been updated.
+     *
+     * @throws \Exception
      */
-    public function reorderTasks($tasks, $fetch_tasks = TRUE) {
+    public function reorderTasks($params, $fetch_tasks = TRUE) {
+        // TODO: validate parameters for each task.
+        if (empty($params['tasks'])) {
+            throw new \Exception('Invalid data provided for reorder tasks endpoint.');
+        }
+
+        $tasks = $params['tasks'];
         foreach ($tasks as $task) {
             $this->db
-                ->prepare('UPDATE task set position = :position WHERE id = :id', [
+                ->prepare('UPDATE task SET position = :position WHERE id = :id', [
                     ':position' => $task['position'],
                     ':id' => $task['id']
                 ])->execute();

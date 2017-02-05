@@ -18,6 +18,7 @@ class TasksController extends BaseController {
 //        $allGetVars = $request->getQueryParams();
 //        $allPostPutVars = $request->getParsedBody();
 
+        // Get all tasks.
         $app->get('/tasks', function (Request $request, Response $response) use ($app, $db) {
             $model = new \Models\TasksModel($app, $db);
             $result = $model->index();
@@ -25,7 +26,8 @@ class TasksController extends BaseController {
             return $response->withJson($result);
         });
 
-        $app->post('/tasks/create', function (Request $request, Response $response) use ($app, $db) {
+        // Create new task.
+        $app->post('/tasks', function (Request $request, Response $response) use ($app, $db) {
             $params = $request->getParsedBody();
             $title = isset($params['title']) ? $params['title'] : NULL;
             $position = isset($params['position']) ? $params['position'] : NULL;
@@ -35,29 +37,30 @@ class TasksController extends BaseController {
             return $response->withJson($result);
         });
 
-        $app->post('/tasks/{id}/close', function (Request $request, Response $response) use ($app, $db) {
+        // Update a task.
+        $app->put('/tasks/{id}', function (Request $request, Response $response) use ($app, $db) {
             $id = $request->getAttribute('id');
             $params = $request->getParsedBody();
             $model = new \Models\TasksModel($app, $db);
-            $result = $model->closeTaskById($id);
+            $result = $model->updateTaskById($id, $params);
 
             return $response->withJson($result);
         });
 
-        $app->delete('/tasks/{id}/delete', function (Request $request, Response $response) use ($app, $db) {
+        // Delete a task
+        $app->delete('/tasks/{id}', function (Request $request, Response $response) use ($app, $db) {
             $id = $request->getAttribute('id');
-            $params = $request->getParsedBody();
             $model = new \Models\TasksModel($app, $db);
             $result = $model->deleteTaskById($id);
 
             return $response->withJson($result);
         });
 
-        $app->post('/tasks/reorder', function (Request $request, Response $response) use ($app, $db) {
+        // Update tasks order.
+        $app->patch('/tasks/reorder', function (Request $request, Response $response) use ($app, $db) {
             $params = $request->getParsedBody();
-            $tasks = isset($params['tasks']) ? $params['tasks'] : NULL;
             $model = new \Models\TasksModel($app, $db);
-            $result = $model->reorderTasks($tasks);
+            $result = $model->reorderTasks($params);
 
             return $response->withJson($result);
         });

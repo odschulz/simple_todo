@@ -12,7 +12,7 @@ app.controller('tasksController', function($scope, $http) {
     };
 
     $scope.addTask = function(title){
-        $http.post('api/public/tasks/create', {
+        $http.post('api/public/tasks', {
             'title': title,
             'position': $scope.tasks.length + 1
         }).then(function(response){
@@ -22,19 +22,32 @@ app.controller('tasksController', function($scope, $http) {
         });
     };
 
-    $scope.closeTask = function(task){
-        if (confirm("Are you sure you want to close this task")) {
-            $http.post('api/public/tasks/' + task.id + '/close').then(function(response){
+    $scope.toggleTaskStatus = function($event, task){
+        var action = ['open', 'close'][task.status];
+        var newStatus = (task.status === '1' ? 0 : 1);
+        console.log(task.status);
+        
+        // console.log(!task.status);
+        
+        if (confirm('Are you sure you want to ' + action + ' this task')) {
+            $http.put('api/public/tasks/' + task.id , {
+                'title': task.title,
+                'status': newStatus,
+                'position': task.position
+            }).then(function(response){
                 $scope.tasks = response.data;
             }, function (error) {
                 console.log(error);
             });
         }
+        else {
+            $event.preventDefault();
+        }
     };
 
     $scope.deleteTask = function(task){
         if (confirm("Are you sure you want to delete this task")) {
-            $http.delete('api/public/tasks/' + task.id + '/delete').then(function(response){
+            $http.delete('api/public/tasks/' + task.id).then(function(response){
                 $scope.tasks = response.data;
             }, function (error) {
                 console.log(error);
@@ -60,7 +73,7 @@ app.controller('tasksController', function($scope, $http) {
         // Get only tasks with a changed position to be updated.
         reorderedTasks.splice(0, reorderIndex);
 
-        $http.post('api/public/tasks/reorder', {
+        $http.patch('api/public/tasks/reorder', {
             'tasks': reorderedTasks
         }).then(function (response) {
             $scope.tasks = response.data;

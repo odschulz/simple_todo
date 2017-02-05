@@ -16,14 +16,14 @@
                         ng-class="{'selected': models.selected === task}"
                     >
                         <div class="checkbox">
-                            <input ng-click="closeTask(task)" ng-checked="task.status === '0'" ng-disabled="task.status === '0'" type="checkbox" value="" />
+                            <input ng-click="toggleTaskStatus($event, task)" ng-checked="task.status === '0'" type="checkbox" value="" />
                             <span ng-class="{'done-item': task.status === '0'}">{{task.title}}</span>
                         </div>
                         <button class="remove-item btn btn-default btn-xs pull-right" ng-click="deleteTask(task)"><span class="glyphicon glyphicon-remove"></span></button>
                     </li>
                 </ul>
                 <div class="todo-footer">
-                    <span><strong><span >{{(tasks | filter:activeTaskFilter).length}}</span></strong> Items</span>
+                    <span><strong><span >{{(tasks | filter:activeTaskFilter).length}}</span></strong> Items left</span>
                     <div class="pull-right">
                         <label class="task-filter-label">
                             <input type="checkbox" data-ng-model="search.status" ng-true-value="" ng-false-value="" class="task-filter">
